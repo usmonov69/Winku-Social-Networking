@@ -30,7 +30,7 @@ def search(request):
 	context = {
 	'queryset': queryset,
 	}
-	return render(request, 'profiles/search_results.html', context)
+	return render(request, 'search_results.html', context)
 
 
 @login_required
@@ -60,7 +60,7 @@ def invites_receved_view(request):
 	'count':count,
 	'profile':profile
 	}
-	return render(request, 'profiles/my_invites.html', context)
+	return render(request, 'my_invites.html', context)
 
 @login_required
 def invite_profiles_list_view(request):
@@ -72,7 +72,7 @@ def invite_profiles_list_view(request):
 	'qs': qs,
 	'profile':profile,
 	}
-	return render(request, 'profiles/to_invite_profile.html', context)
+	return render(request, 'to_invite_profile.html', context)
 
 @login_required
 def profiles_list_view(request):
@@ -82,7 +82,7 @@ def profiles_list_view(request):
 	context = {
 	'qs': qs,
 	}
-	return render(request, 'profiles/prosfile_list.html', context)
+	return render(request, 'prosfile_list.html', context)
 @login_required
 def accept_invatation(request):
 	if request.method == 'POST':
@@ -107,7 +107,7 @@ def reject_invatation(request):
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
 	model = Profile
-	template_name = 'profiles/profile_detail.html'
+	template_name = 'profile_detail.html'
 
 	# def get_object(self , slug=None):
 	# 	slug = self.kwargs.get('slug')
@@ -137,7 +137,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 
 class ProfileListView(LoginRequiredMixin, ListView ):
 	model = Profile
-	template_name ='profiles/profile_list.html'
+	template_name ='profile_list.html'
 	# context_object_name = 'qs'
 
 	def get_queryset(self):
