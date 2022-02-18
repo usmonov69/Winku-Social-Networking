@@ -1,0 +1,114 @@
+{% extends 'base.html ' %}
+{% load static %}
+
+	
+{% block content %}
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="newsfeed.html"><img src="images/logo.png" alt=""></a>
+		</div>
+		
+		{% include 'detail/topbar.html' %}
+	
+		<section>
+			<div class="feature-photo">
+				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
+			
+				<div class="container-fluid">
+					<div class="row merged">
+						<div class="col-lg-2 col-sm-3">
+							<div class="user-avatar">
+								<figure>
+									<img src="{{ profile.avatar.url }}" alt="">
+									
+								</figure>
+							</div>
+						</div>
+						<div class="col-lg-10 col-sm-9">
+							<div class="timeline-info">
+								<ul>
+									<li class="admin-name">
+									  <h5>{{profile.user}}</h5>
+									</li>
+									<li>
+										
+										<a class="" href="{% url 'posts:index' %}" title="" data-ripple="">Home  </a>
+										
+										<a class="active" href="{% url 'profiles:profiles-list-view' %}" title="" data-ripple="">Profiles</a>
+									
+										
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section><!-- top area -->
+
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									{% include 'detail/shortcuts.html' %}
+								
+								</aside>
+				</div><!-- sidebar -->
+				<div class="col-lg-6">
+					<div class="central-meta">
+						<div class="frnds">
+							<ul class="nav nav-tabs">
+								 <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">All Profiles </a> </li>
+							</ul>
+
+							<!-- Tab panes -->
+							<div class="tab-content">
+							  <div class="tab-pane active fade show " id="frends" >
+								<ul class="nearby-contct">
+								{% for obj in qs  %}
+							<li>
+								<div class="nearly-pepls">
+									<figure>
+										<a href="{{ obj.get_absolute_url }}" title=""><img src="{{ obj.avatar.url }}" alt=""></a>
+									</figure>
+									<div class="pepl-info">
+										<h4><a href="{{ obj.get_absolute_url }}" title="">{{ obj.user }}</a></h4>
+								
+								
+
+
+
+									</div>
+								</div>
+							</li>
+							
+						{% endfor  %}
+										</ul>
+											<div class="lodmore"><button class="btn-view btn-load-more"></button></div>
+										  </div>
+									
+										  </div> 
+										</div>
+									</div>
+								</div>	
+							</div><!-- centerl meta -->
+							<div class="col-lg-3">
+								
+							</div>
+
+							<!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+</div>
+
+{% endblock content  %}

@@ -1,0 +1,59 @@
+{% load static  %}
+
+{% url 'posts:index' as path_main_page   %}
+{% url 'profiles:my-invites-view' as path_my_invites %}
+{% url 'profiles:to-invite-profiles' as path_invites_profiles   %}
+
+
+		<div class="top-area">
+			<ul class="main-menu">
+				<li>
+					<a href="{{ path_main_page }}" title="">Home</a>
+				</li>
+				<li>
+					<a href="#" title="">Friend</a>
+					<ul>
+						<li><a href="{{ path_my_invites }}" title=""> Received Invites &nbsp; {{invites_num}}</a></li>
+						<li><a href="{{ path_invites_profiles }}" title="">Send Invites </a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" title="">account </a>
+					<ul>
+						<li><a href="{% url 'profiles:my-profile' %}" title="">edit profile basics</a></li>
+						<li><a href="{% url 'profiles:profiles-list-view' %}" title="">profiles</a></li>
+						<li><a href="#" title="">friends</a></li>
+						<li><a href="{% url 'account_reset_password' %}" title="">edit-password</a></li>
+					</ul>
+				</li>
+				
+		</ul>
+		<ul class="setting-area">
+			<li>
+				<i class="ti-search"></i>
+				<div class="searched">
+					<form action="{% url 'profiles:search-profile' %}" class="form-search">
+						<input type="search" name="q" id="search" placeholder="Search Friends " />
+					</form>
+				</div>
+			</li>
+			
+			<li><a href="/" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
+			<li><a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>
+					<div class="dropdowns languages">
+						<a href="#" title=""><i class="ti-check"></i>English</a>
+						<a href="#" title="">Arabic</a>
+						<a href="#" title="">Dutch</a>
+						<a href="#" title="">French</a>
+					</div>
+				</li>
+				
+				
+			</ul>
+			<div class="user-img">
+				<img src="" alt=""> &nbsp;
+				
+			</div>
+			
+		</div>
+	</div><!-- topbar -->

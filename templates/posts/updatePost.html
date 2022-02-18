@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block content %}
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="newsfeed.html"><img src="{%static  'images/logo.png' %}" alt=""></a>
+		</div>
+		
+		{% include 'detail/topbar.html' %}
+	
+
+
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									
+								
+
+								</aside>
+							</div><!-- sidebar -->
+							<div class="col-lg-6">
+								<div class="central-meta">
+										<h5 class="f-title"><i class="ti-info-alt"></i> Edit Post</h5>
+										{{ form.media }}
+										<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+										<div class="row-10">
+											
+											{{form.as_p}}
+										</div>
+										
+											
+											
+											<div class="submit-btns">
+												<button type="button" class="mtr-btn">
+													<span><a href="{% url 'posts:index' %}"> Cancel</a></span></button>
+												<button type="submit" class="mtr-btn"><span>Update</span></button>
+											</div>
+										</form>
+								</div>	
+							</div><!-- centerl meta -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+	
+{% endblock content %}

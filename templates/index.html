@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% load static  %}
+
+{% block content %}
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	
+	
+	
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="newsfeed.html"><img src="{%static 'images/logo.png' %}" alt=""></a>
+		</div>
+		{% include 'detail/topbar.html' %}
+		
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									<div class="widget">
+											<h4 class="widget-title">Socials</h4>
+											<ul class="socials">
+												<li class="facebook">
+													<a title="" href="#"><i class="fa fa-facebook"></i> <span>facebook</span> <ins>45 likes</ins></a>
+												</li>
+												<li class="twitter">
+													<a title="" href="#"><i class="fa fa-twitter"></i> <span>twitter</span><ins>25 likes</ins></a>
+												</li>
+												<li class="google">
+													<a title="" href="#"><i class="fa fa-google"></i> <span>google</span><ins>35 likes</ins></a>
+												</li>
+											</ul>
+										</div>
+									{% include 'detail/shortcuts.html' %}
+									{% include 'detail/recent_posts.html' with  recent_post=recent_post %}
+
+								</aside>
+							</div><!-- sidebar -->
+							<div class="col-lg-6">
+								<div class="central-meta">
+									<div class="new-postbox">
+										<figure>
+											<img src="{{ profile.avatar.url }}" alt="">
+										</figure>
+										<div class="newpst-input">
+											{{ form.media}}
+											<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+												{{ form.content }}
+												<div class="attachments">
+													<ul>
+														<li>
+															<i class="fa fa-image"></i>
+															<label class="fileContainer">
+																{{ form.image }}
+															</label>
+														</li>
+														<li>
+															<button type="submit" name="submit_p_form">Post</button>
+														</li>
+													</ul>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div><!-- add post new box -->
+			<div class="loadMore">
+			<div class="central-meta item">
+				<div class="user-post">
+						{% for obj in qs %}
+
+					<div class="friend-info">
+						<figure>
+							<img src="{{ obj.author.avatar.url }}" alt="">
+						</figure>
+						<div class="friend-name">
+							<ins><a href="{{ obj.author.get_absolute_url }}" title="">{{ obj.author.user.username | title }}</a></ins>
+							<span>{{ obj.created }}</span>
+						</div>
+						<div class="post-meta">
+							{% if obj.image %}
+							<a href="{% url 'posts:post-detail' obj.pk %}">
+							<img src="{{ obj.image.url }}" alt="">
+							{% endif %}
+							</a>
+							<div class="we-video-info">
+								<ul>
+									<li>
+										<span class="views" data-toggle="tooltip" title="views">
+											<i class="fa fa-eye"></i>
+											<ins>{{ obj.view_count }}</ins>
+										</span>
+									</li>
+									<li>
+										<span class="comment" data-toggle="tooltip" title="Comments">
+											<i class="fa fa-comments-o"></i>
+											<ins>{{ obj.num_comments }}</ins>
+										</span>
+									</li>
+									<li>
+									<form action="{% url 'posts:like-unlike-post' %}" method="POST" class="like-form" id="{{ obj.id }}">
+										{% csrf_token %}
+										<input type="hidden" name="post_id" value="{{obj.id}}">
+									<button style="background-color: #fdfdfd;"  type="submit">
+										{% if profile not in obj.liked.all %}
+									<li>
+										<span class="like" data-toggle="tooltip" title="like">
+										 <i class="fa fa-thumbs-up"></i>									
+										  <ins>{{ obj.num_likes }}</ins>
+										</span>
+									</li>
+									{% else %}
+									<li>
+										<span class="like" style="color: #088dd0;" data-toggle="tooltip" title="like">
+											  <i class="fa fa-thumbs-up"></i>		
+												<ins>{{ obj.num_likes }}</ins>
+										</span>
+									</li>
+									{% endif %}
+									</button>
+									</form>
+									</li>
+									<li class="social-media">
+										<div class="menu">
+										  <div class="btn trigger"><i class="fa fa-share-alt"></i></div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-html5"></i></a></div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-facebook"></i></a></div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-google-plus"></i></a></div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-twitter"></i></a></div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-css3"></i></a></div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-instagram"></i></a>
+											</div>
+										  </div>
+											<div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-dribbble"></i></a>
+											</div>
+										  </div>
+										  <div class="rotater">
+											<div class="btn btn-icon"><a href="#" title=""><i class="fa fa-pinterest"></i></a>
+											</div>
+										  </div>
+
+										</div>
+									</li>
+								</ul>
+							</div>
+						 {% ifequal request.user obj.author.user %}
+								<a href="{% url 'posts:delete-post' obj.pk %}">Delete</a>
+								<a href="{% url 'posts:update-post' obj.pk %}">Update</a>
+							{% endifequal %}
+							<div class="description">
+							<a href="{% url 'posts:post-detail' obj.pk %}"><p>
+								{% if obj.image %}
+							 {{ obj.content |linebreaks|truncatechars:200 }}
+							 {% else %}
+							 {{ obj.content |linebreaks|truncatechars:550 }}
+							 {% endif %}
+							</p></a>
+							</div>
+						</div>
+					</div>
+					<div class="coment-area">
+						<ul class="we-comet">
+					{% if obj.comment_set.all %}
+						
+							<li>
+								<a href="{% url 'posts:post-detail' obj.pk %}" title="" class="showmore underline">see comment</a>
+							</li>
+							<li class="post-comment">
+								<div class="comet-avatar">
+									<img src="{{ profile.avatar.url }}" alt="">
+								</div>
+					{% endif %}
+					
+								<div class="post-comt-box">
+									<form method="post">{% csrf_token %}
+										<div class="form-group half">
+										<input type="hidden" name="post_id" value="{{ obj.id }}">
+										{{ form_c }}
+										</div>
+										<div class="add-smiles">
+											<span class=" em em-smiley" title="add icon"></span>
+										</div>
+										<div class="smiles-bunch">
+											<i class="em em---1"></i>
+											<i class="em em-expressionless"></i>
+											<i class="em em-anguished"></i>
+											<i class="em em-laughing"></i>
+											<i class="em em-angry"></i>
+											<i class="em em-astonished"></i>
+											<i class="em em-blush"></i>
+											<i class="em em-disappointed"></i>
+											<i class="em em-worried"></i>
+											<i class="em em-kissing_heart"></i>
+											<i class="em em-rage"></i>
+											<i class="em em-stuck_out_tongue"></i>
+										</div>
+										<button type="submit" name="submit_c_form"></button>
+									</form>	
+								</div>
+							</li>
+						</ul>
+					</div>
+					{% endfor  %}
+
+				</div>
+			</div>
+			</div>
+							</div><!-- centerl meta -->
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									<div class="widget">
+										<h4 class="widget-title">Your page</h4>	
+										<div class="your-page">
+											<figure>
+												<a href="#" title=""><img src="" alt=""></a>
+											</figure>
+											<div class="page-meta">
+												<a href="#" title="" class="underline">{{profile.user}}</a>
+												<span><i class="fa fa-users"></i><a href="{% url 'profiles:my-profile' %}" title="">Friends <em>{{profile.get_friends_no}}</em></a></span>
+												<span><i class="ti-bell"></i><a href="insight.html" title="">Posts <em>{{ profile.get_posts_no }}</em></a></span>
+											</div>
+											<div class="page-likes">
+												<ul class="nav nav-tabs likes-btn">
+													<li class="nav-item"><a class="active" href="#link1" data-toggle="tab">likes</a></li>
+													 <li class="nav-item"><a class="" href="#link2" data-toggle="tab">views</a></li>
+												</ul>
+												
+											</div>
+										</div>
+									</div><!-- page like widget -->
+									<div class="widget">
+										<div class="banner medium-opacity bluesh">
+											<div class="bg-image" style="background-image: url({% static 'images/resources/baner-widgetbg.jpg' %})"></div>
+											<div class="baner-top">
+												<span><img  src="{% static 'images/book-icon.png' %}" alt=""></span>
+												<i class="fa fa-ellipsis-h"></i>
+											</div>
+											<div class="banermeta">
+												<p>
+													create your own favourit page.
+												</p>
+												<span>like them all</span>
+												<a data-ripple="" title="" href="#">start now!</a>
+											</div>
+										</div>											
+									</div>
+									
+								</aside>
+							</div><!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+	<script >
+		$( document ).ready(function() {
+			let display = false
+
+			
+
+			$('.like-form').submit(function(e){
+                e.preventDefault()
+				console.log('works')
+			})
+
+		});
+	</script>
+
+
+{% endblock scripts %}

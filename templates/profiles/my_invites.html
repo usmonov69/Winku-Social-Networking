@@ -1,0 +1,95 @@
+
+{% extends 'base.html ' %}
+{% load static %}
+
+	
+{% block content %}
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="newsfeed.html"><img src="images/logo.png" alt=""></a>
+		</div>
+		
+		{% include 'detail/topbar.html' %}
+	
+	{% include 'detail/hephoto.html' with  profile=profile %}
+
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									{% include 'detail/shortcuts.html' %}
+									
+
+								</aside>
+				</div><!-- sidebar -->
+				<div class="col-lg-6">
+					<div class="central-meta">
+						<div class="frnds">
+							<ul class="nav nav-tabs">
+								 <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">All Invatations </a> <span>{{count}}</span></li>
+							</ul>
+
+							<!-- Tab panes -->
+							<div class="tab-content">
+							  <div class="tab-pane active fade show " id="frends" >
+								<ul class="nearby-contct">
+									{% if is_empty %}
+										<h4 >No invatations here ... </h4>
+									{% endif  %}
+								{% for obj in qs  %}
+							<li>
+								<div class="nearly-pepls">
+									<figure>
+										<a href="{{ obj.get_absolute_url }}" title=""><img src="{{ obj.avatar.url }}" alt=""></a>
+									</figure>
+									<div class="pepl-info">
+										<h4><a href="{{ obj.get_absolute_url }}" title="">{{ obj.user | title }}</a></h4>
+									
+									<div class="for-but">
+										
+										<form action="{% url 'profiles:accept-invite' %}" method="POST">
+			                                {% csrf_token %}
+			                                <input type="hidden" name="profile_pk" value={{obj.pk}}>
+			                                <button style="margin-bottom: 2%" type="submit"  class="btn btn-primary btn-sm btn-sm">Accept invite</button>
+			                            </form>
+
+			                            
+
+				                        <form action="{% url 'profiles:reject-invite' %}" method="POST">
+				                            {% csrf_token %}
+				                            <input type="hidden" name="profile_pk" value={{obj.pk}}>
+				                            <button  type="submit" class="btn btn-outline-danger btn-sm"></i>Reject invite </button>
+				                        </form>
+
+									</div>
+								
+
+
+
+									</div>
+								</div>
+							</li>
+							
+						{% endfor  %}
+										
+									
+							<div class="col-lg-3">
+								
+							</div>
+
+							<!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+</div>
+
+{% endblock content  %}

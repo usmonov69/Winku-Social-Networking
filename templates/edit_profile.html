@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block content %}
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="newsfeed.html"><img src="{%static  'images/logo.png' %}" alt=""></a>
+		</div>
+		
+		{% include 'detail/topbar.html' %}
+	
+		{% include 'detail/hephoto.html' %}
+
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									
+									<div class="widget stick-widget">
+										<h4 class="widget-title">{{ profile.user }}</h4>
+										<ul class="naves">
+											<li>
+												<a href="#" title="">First name: <b>{{profile.first_name }}</b></a>
+											</li>
+											<li>
+												<a href="#" title="">Last name: <b>{{profile.last_name }}</b></a>
+											</li>
+											<li>
+												<a href="#" title="">Bio: <b>{{profile.bio}}</b></a>
+											</li>
+											<li>
+												<a href="#" title="">Email: <b>{{profile.email}}</b></a>
+											</li>
+											<li>
+												<a href="#" title="">Friends of number: <b>{{profile.get_friends_no}}</b> </a>
+											</li>
+											<hr>
+											<li>
+												<a href="#" title="">Number of likes : <b>{{profile.get_likes_given_no}}</b> </a>
+											</li>
+											<li>
+												<a href="#" title="">Number of posts: <b>{{profile.get_posts_no}}</b> </a>
+											</li>
+
+										</ul>
+									</div><!-- settings widget -->	
+
+								</aside>
+							</div><!-- sidebar -->
+							<div class="col-lg-6">
+								<div class="central-meta">
+									<div class="editing-info">
+										<h5 class="f-title"><i class="ti-info-alt"></i> Edit Basic Information</h5>
+
+										<form method="post">{% csrf_token %}
+											<div class="form-group half">	
+											  {{ form.first_name  }}
+											
+											  <label class="control-label" for="input">First Name</label><i class="mtrl-select"></i>
+											</div>
+											<div class="form-group half">	
+											  {{ form.last_name  }}
+											  <label class="control-label" for="input">Last Name</label><i class="mtrl-select"></i>
+											</div>
+											<div class="form-group">	
+											  {{ form.email  }}
+											  <label class="control-label" for="input"><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b0e262a22270b">Email</a></label><i class="mtrl-select"></i>
+											</div>
+											
+											<div class="mb-3">
+											  
+											 {{ form.avatar  }}
+											</div>
+
+											<div class="form-group">	
+											  {{ form.bio  }}
+											
+											  <label class="control-label" for="textarea">About Me</label><i class="mtrl-select"></i>
+											
+											</div>
+											<div class="submit-btns">
+												<button type="button" class="mtr-btn"><span>Cancel</span></button>
+												<button type="submit" class="mtr-btn"><span>Update</span></button>
+											</div>
+										</form>
+									</div>
+								</div>	
+							</div><!-- centerl meta -->
+						<div class="col-lg-3">
+								<aside class="sidebar static">
+									<div class="widget">
+										<h4 class="widget-title">Your page</h4>	
+										<div class="your-page">
+											<figure>
+												<a href="#" title=""><img src="" alt=""></a>
+											</figure>
+											<div class="page-meta">
+												<a href="#" title="" class="underline">{{profile.user}}</a>
+												<span><i class="fa fa-users"></i><a href="{% url 'profiles:my-profile' %}" title="">Friends <em>{{profile.get_friends_no}}</em></a></span>
+												<span><i class="ti-bell"></i><a href="insight.html" title="">Posts <em>{{ profile.get_posts_no }}</em></a></span>
+											</div>
+											<div class="page-likes">
+												<ul class="nav nav-tabs likes-btn">
+													<li class="nav-item"><a class="active" href="#link1" data-toggle="tab">likes</a></li>
+													 <li class="nav-item"><a class="" href="#link2" data-toggle="tab">views</a></li>
+												</ul>
+												
+											</div>
+										</div>
+									</div><!-- page like widget -->
+								</aside>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+
+	
+{% endblock content %}
